@@ -22,10 +22,12 @@ class MarcadorTests extends FunSuite {
 }
 
 class Marcador {
-  def getPuntuacion() = 0
+  var puntuacion = 0
 
-  def añadirLanzamiento(lanzamiento: Lanzamiento) {
+  def getPuntuacion() = puntuacion
 
+  def añadirLanzamiento(lanzamiento: Int) {
+     puntuacion += lanzamiento
   }
 }
 
