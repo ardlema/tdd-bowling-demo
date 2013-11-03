@@ -12,6 +12,18 @@ class JuegoTests extends FunSuite {
     assert(juegoConUnLanzamiento.getPuntuacion() == puntuacionLanzamiento,
       s"El marcador inicial no es $puntuacionLanzamiento")
   }
+
+  test("añadir dos lanzamientos sin tirar todos los bolos") {
+    val puntuacionPrimerLanzamiento = 5
+    val puntuacionSegundoLanzamiento = 4
+    val puntuacionTotal = puntuacionPrimerLanzamiento + puntuacionSegundoLanzamiento
+    val juegoConDosLanzamientos = new Juego
+    juegoConDosLanzamientos.añadir(puntuacionPrimerLanzamiento)
+    juegoConDosLanzamientos.añadir(puntuacionSegundoLanzamiento)
+
+    assert(juegoConDosLanzamientos.getPuntuacion() == puntuacionTotal,
+      s"El marcador despues de los lanzamientos no es $puntuacionTotal")
+  }
 }
 
 class Juego {
