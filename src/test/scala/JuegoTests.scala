@@ -77,6 +77,32 @@ class JuegoTests
     assert(juegoConCuatroLanzamientos.getPuntuacion() == puntuacionTotal,
       s"El marcador total despues de los lanzamientos no es $puntuacionTotal")
   }
+
+  test("añadir jugada despues de semipleno") {
+    val puntuacionPrimerLanzamiento = 5
+    val puntuacionSegundoLanzamiento = 5
+    val puntuacionTercerLanzamiento = 3
+    val puntuacionCuartoLanzamiento = 2
+    val puntuacionTotalPrimeraJugada = puntuacionPrimerLanzamiento + puntuacionSegundoLanzamiento
+    val puntuacionTotalSegundaJugada = puntuacionTercerLanzamiento + puntuacionCuartoLanzamiento
+    val puntuacionSemipleno = puntuacionTotalPrimeraJugada + puntuacionTercerLanzamiento
+    val puntuacionTotal = puntuacionSemipleno + puntuacionTotalSegundaJugada
+
+    val juegoConCuatroLanzamientos = new Juego
+
+    juegoConCuatroLanzamientos.añadir(puntuacionPrimerLanzamiento)
+    juegoConCuatroLanzamientos.añadir(puntuacionSegundoLanzamiento)
+    juegoConCuatroLanzamientos.añadir(puntuacionTercerLanzamiento)
+    juegoConCuatroLanzamientos.añadir(puntuacionCuartoLanzamiento)
+
+    assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(1)
+      == puntuacionSemipleno,
+      s"El marcador del semipleno no es $puntuacionSemipleno")
+
+    assert(juegoConCuatroLanzamientos.getPuntuacion()
+      == puntuacionTotal,
+      s"El marcador de la segunda jugada despues del semipleno no es $puntuacionTotal")
+  }
 }
 
 class Juego {
