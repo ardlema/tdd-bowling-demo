@@ -44,22 +44,41 @@ class JuegoTests extends FunSuite {
     assert(juegoConCuatroLanzamientos.getPuntuacion() == puntuacionTotal,
       s"El marcador total despues de los lanzamientos no es $puntuacionTotal")
 
+    println("Marcador primera jugada: " + juegoConCuatroLanzamientos.getPuntuacionParaJugada(1))
     assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(1) == puntuacionTotalPrimeraJugada,
       s"El marcador para la primera jugada no es $puntuacionTotalPrimeraJugada")
 
-    assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(2) == puntuacionTotalSegundaJugada,
-      s"El marcador para la segunda jugada no es $puntuacionTotalSegundaJugada")
+    println("Marcador segunda jugada: " + juegoConCuatroLanzamientos.getPuntuacionParaJugada(2))
+    assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(2) == puntuacionTotal,
+      s"El marcador para la segunda jugada no es $puntuacionTotal")
   }
 }
 
 class Juego {
   var puntuacion = 0
+  var lanzamientos = new Array[Int](21)
+  var lanzamientoActual = 1
 
   def getPuntuacion() = puntuacion
 
-  def getPuntuacionParaJugada(jugada: Int) = 0
+  def getPuntuacionParaJugada(jugada: Int) = {
+    var lanzamiento  = 0
+    var puntuacion = 0
+    var contadorJugadas = 0
+
+    while(contadorJugadas < jugada)
+    {
+      contadorJugadas += 1
+      puntuacion += lanzamientos(lanzamiento+1) + lanzamientos(lanzamiento+2)
+      lanzamiento += 2
+    }
+
+    puntuacion
+  }
 
   def añadir(lanzamiento: Int) {
     puntuacion += lanzamiento
+    lanzamientos(lanzamientoActual) = lanzamiento
+    lanzamientoActual += 1
   }
 }
