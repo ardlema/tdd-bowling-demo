@@ -57,6 +57,9 @@ class JuegoTests
 
     assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(2) == puntuacionTotal,
       s"El marcador para la segunda jugada no es $puntuacionTotal")
+
+    assert(juegoConCuatroLanzamientos.jugadaActual() == 2,
+      "La jugada actual no es 2")
   }
 
   test("añadir un semipleno") {
