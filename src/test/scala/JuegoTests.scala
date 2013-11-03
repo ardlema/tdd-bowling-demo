@@ -99,9 +99,13 @@ class JuegoTests
       == puntuacionSemipleno,
       s"El marcador del semipleno no es $puntuacionSemipleno")
 
+    assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(2)
+      == puntuacionTotal,
+      s"El marcador del semipleno no es $puntuacionTotal")
+    /*
     assert(juegoConCuatroLanzamientos.getPuntuacion()
       == puntuacionTotal,
-      s"El marcador de la segunda jugada despues del semipleno no es $puntuacionTotal")
+      s"El marcador de la segunda jugada despues del semipleno no es $puntuacionTotal")*/
   }
 }
 
