@@ -149,5 +149,5 @@ class Juego {
     lanzamientoActual += 1
   }
 
-  def jugadaActual() = 0
+  def jugadaActual() = 1
 }
