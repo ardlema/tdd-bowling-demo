@@ -1,8 +1,12 @@
 package org.paradigma.tddbowlingdemo
 
-import org.scalatest.FunSuite
+import org.scalatest.{BeforeAndAfterEach, FunSuite}
 
-class JuegoTests extends FunSuite {
+class JuegoTests
+  extends FunSuite
+  with BeforeAndAfterEach {
+
+  val puntuacionSemipleno = 13
 
   test("añadir un lanzamiento") {
     val puntuacionLanzamiento = 5
@@ -44,13 +48,34 @@ class JuegoTests extends FunSuite {
     assert(juegoConCuatroLanzamientos.getPuntuacion() == puntuacionTotal,
       s"El marcador total despues de los lanzamientos no es $puntuacionTotal")
 
-    println("Marcador primera jugada: " + juegoConCuatroLanzamientos.getPuntuacionParaJugada(1))
     assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(1) == puntuacionTotalPrimeraJugada,
       s"El marcador para la primera jugada no es $puntuacionTotalPrimeraJugada")
 
-    println("Marcador segunda jugada: " + juegoConCuatroLanzamientos.getPuntuacionParaJugada(2))
     assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(2) == puntuacionTotal,
       s"El marcador para la segunda jugada no es $puntuacionTotal")
+  }
+
+  test("añadir un semipleno") {
+    val puntuacionPrimerLanzamiento = 5
+    val puntuacionSegundoLanzamiento = 5
+    val puntuacionTercerLanzamiento = 3
+    val puntuacionCuartoLanzamiento = 2
+    val puntuacionTotalPrimeraJugada = puntuacionPrimerLanzamiento + puntuacionSegundoLanzamiento
+    val puntuacionTotalSegundaJugada = puntuacionTercerLanzamiento + puntuacionCuartoLanzamiento
+    val puntuacionTotal = puntuacionTotalPrimeraJugada + puntuacionTotalSegundaJugada
+
+    val juegoConCuatroLanzamientos = new Juego
+
+    juegoConCuatroLanzamientos.añadir(puntuacionPrimerLanzamiento)
+    juegoConCuatroLanzamientos.añadir(puntuacionSegundoLanzamiento)
+    juegoConCuatroLanzamientos.añadir(puntuacionTercerLanzamiento)
+    juegoConCuatroLanzamientos.añadir(puntuacionCuartoLanzamiento)
+
+    assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(1) == puntuacionSemipleno,
+      s"El marcador del semipleno no es $puntuacionSemipleno")
+
+    assert(juegoConCuatroLanzamientos.getPuntuacion() == puntuacionTotal,
+      s"El marcador total despues de los lanzamientos no es $puntuacionTotal")
   }
 }
 
