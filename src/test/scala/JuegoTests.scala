@@ -28,6 +28,9 @@ class JuegoTests
 
     assert(juegoConDosLanzamientos.getPuntuacion() == puntuacionTotal,
       s"El marcador despues de los lanzamientos no es $puntuacionTotal")
+
+    assert(juegoConDosLanzamientos.jugadaActual() == 1,
+      "La jugada actual no es 1")
   }
 
   test("añadir cuatro lanzamientos sin tirar todos los bolos en ninguno de ellos") {
