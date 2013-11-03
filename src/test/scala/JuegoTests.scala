@@ -6,8 +6,6 @@ class JuegoTests
   extends FunSuite
   with BeforeAndAfterEach {
 
-  val puntuacionSemipleno = 13
-
   test("añadir un lanzamiento") {
     val puntuacionLanzamiento = 5
     val juegoConUnLanzamiento = new Juego
@@ -62,6 +60,7 @@ class JuegoTests
     val puntuacionCuartoLanzamiento = 2
     val puntuacionTotalPrimeraJugada = puntuacionPrimerLanzamiento + puntuacionSegundoLanzamiento
     val puntuacionTotalSegundaJugada = puntuacionTercerLanzamiento + puntuacionCuartoLanzamiento
+    val puntuacionSemipleno = puntuacionTotalPrimeraJugada + puntuacionTercerLanzamiento
     val puntuacionTotal = puntuacionTotalPrimeraJugada + puntuacionTotalSegundaJugada
 
     val juegoConCuatroLanzamientos = new Juego
@@ -71,7 +70,8 @@ class JuegoTests
     juegoConCuatroLanzamientos.añadir(puntuacionTercerLanzamiento)
     juegoConCuatroLanzamientos.añadir(puntuacionCuartoLanzamiento)
 
-    assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(1) == puntuacionSemipleno,
+    assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(1)
+      == puntuacionSemipleno,
       s"El marcador del semipleno no es $puntuacionSemipleno")
 
     assert(juegoConCuatroLanzamientos.getPuntuacion() == puntuacionTotal,
@@ -94,7 +94,16 @@ class Juego {
     while(contadorJugadas < jugada)
     {
       contadorJugadas += 1
-      puntuacion += lanzamientos(lanzamiento+1) + lanzamientos(lanzamiento+2)
+      val puntuacionPrimerLanzamiento = lanzamientos(lanzamiento+1)
+      val puntuacionSegundLanzamiento = lanzamientos(lanzamiento+2)
+
+      val puntuacionJugada = puntuacionPrimerLanzamiento + puntuacionSegundLanzamiento
+
+      puntuacion += puntuacionJugada
+
+      if (puntuacionJugada==10)
+         puntuacion += lanzamientos(lanzamiento+3)
+
       lanzamiento += 2
     }
 
