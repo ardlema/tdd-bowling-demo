@@ -216,5 +216,6 @@ class Juego {
       primerLanzamiento = true
       jugadaActual += 1
     }
+    jugadaActual = math.min(10, jugadaActual)
   }
 }
