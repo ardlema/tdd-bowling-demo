@@ -165,6 +165,35 @@ class JuegoTests
       == puntuacionJuegoConStrikeEnLaUltimaJugada,
       s"El marcador total no es $puntuacionJuegoConStrikeEnLaUltimaJugada")
   }
+
+  test("partida de ejemplo")
+  {
+    val puntuacionPartidaDeEjemplo = 133
+    val partidaDeEjemplo = new Juego
+    partidaDeEjemplo.añadir(1)
+    partidaDeEjemplo.añadir(4)
+    partidaDeEjemplo.añadir(4)
+    partidaDeEjemplo.añadir(5)
+    partidaDeEjemplo.añadir(6)
+    partidaDeEjemplo.añadir(4)
+    partidaDeEjemplo.añadir(5)
+    partidaDeEjemplo.añadir(5)
+    partidaDeEjemplo.añadir(10)
+    partidaDeEjemplo.añadir(0)
+    partidaDeEjemplo.añadir(1)
+    partidaDeEjemplo.añadir(7)
+    partidaDeEjemplo.añadir(3)
+    partidaDeEjemplo.añadir(6)
+    partidaDeEjemplo.añadir(4)
+    partidaDeEjemplo.añadir(10)
+    partidaDeEjemplo.añadir(2)
+    partidaDeEjemplo.añadir(8)
+    partidaDeEjemplo.añadir(6)
+
+    assert(partidaDeEjemplo.getPuntuacion()
+      == puntuacionPartidaDeEjemplo,
+      s"El marcador total no es $puntuacionPartidaDeEjemplo")
+  }
 }
 
 class Juego {
