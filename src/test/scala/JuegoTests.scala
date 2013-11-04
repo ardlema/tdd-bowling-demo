@@ -14,8 +14,8 @@ class JuegoTests
     assert(juegoConUnLanzamiento.getPuntuacion() == puntuacionLanzamiento,
       s"El marcador inicial no es $puntuacionLanzamiento")
 
-    assert(juegoConUnLanzamiento.getJugadaActual() == 1,
-       "La jugada actual no es 1")
+    assert(juegoConUnLanzamiento.getJugadaActual() == 2,
+       "La jugada actual no es 2")
   }
 
   test("añadir dos lanzamientos sin tirar todos los bolos") {
@@ -122,7 +122,7 @@ class Juego {
   var puntuacion = 0
   var lanzamientos = new Array[Int](21)
   var lanzamientoActual = 1
-  var jugadaActual = 0
+  var jugadaActual = 1
   var primerLanzamiento = true
 
   def getPuntuacion() = puntuacion
