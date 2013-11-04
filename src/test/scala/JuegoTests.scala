@@ -14,8 +14,8 @@ class JuegoTests
     assert(juegoConUnLanzamiento.getPuntuacion() == puntuacionLanzamiento,
       s"El marcador inicial no es $puntuacionLanzamiento")
 
-    assert(juegoConUnLanzamiento.getJugadaActual() == 2,
-       "La jugada actual no es 2")
+    assert(juegoConUnLanzamiento.getJugadaActual() == 1,
+       "La jugada actual no es 1")
   }
 
   test("añadir dos lanzamientos sin tirar todos los bolos") {
@@ -66,25 +66,21 @@ class JuegoTests
     val puntuacionPrimerLanzamiento = 5
     val puntuacionSegundoLanzamiento = 5
     val puntuacionTercerLanzamiento = 3
-    val puntuacionCuartoLanzamiento = 2
     val puntuacionTotalPrimeraJugada = puntuacionPrimerLanzamiento + puntuacionSegundoLanzamiento
-    val puntuacionTotalSegundaJugada = puntuacionTercerLanzamiento + puntuacionCuartoLanzamiento
     val puntuacionSemipleno = puntuacionTotalPrimeraJugada + puntuacionTercerLanzamiento
-    val puntuacionTotal = puntuacionTotalPrimeraJugada + puntuacionTotalSegundaJugada
 
     val juegoConCuatroLanzamientos = new Juego
 
     juegoConCuatroLanzamientos.añadir(puntuacionPrimerLanzamiento)
     juegoConCuatroLanzamientos.añadir(puntuacionSegundoLanzamiento)
     juegoConCuatroLanzamientos.añadir(puntuacionTercerLanzamiento)
-    juegoConCuatroLanzamientos.añadir(puntuacionCuartoLanzamiento)
 
     assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(1)
       == puntuacionSemipleno,
       s"El marcador del semipleno no es $puntuacionSemipleno")
 
-    assert(juegoConCuatroLanzamientos.getPuntuacion() == puntuacionTotal,
-      s"El marcador total despues de los lanzamientos no es $puntuacionTotal")
+    assert(juegoConCuatroLanzamientos.getJugadaActual() == 2,
+      "La jugada actual no es 2")
   }
 
   test("añadir jugada despues de semipleno") {
@@ -111,10 +107,11 @@ class JuegoTests
     assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(2)
       == puntuacionTotal,
       s"El marcador del semipleno no es $puntuacionTotal")
-    /*
-    assert(juegoConCuatroLanzamientos.getPuntuacion()
-      == puntuacionTotal,
-      s"El marcador de la segunda jugada despues del semipleno no es $puntuacionTotal")*/
+
+
+
+    assert(juegoConCuatroLanzamientos.getJugadaActual() == 3,
+      "La jugada actual no es 3")
   }
 }
 
@@ -164,14 +161,14 @@ class Juego {
 
   def ajustarJugadaActual()
   {
-    if (primerLanzamiento == true)
+    if (primerLanzamiento)
     {
       primerLanzamiento = false
-      jugadaActual += 1
     }
     else
     {
-      primerLanzamiento=true
+      primerLanzamiento = true
+      jugadaActual += 1
     }
   }
 }
