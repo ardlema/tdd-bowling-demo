@@ -14,7 +14,7 @@ class JuegoTests
     assert(juegoConUnLanzamiento.getPuntuacion() == puntuacionLanzamiento,
       s"El marcador inicial no es $puntuacionLanzamiento")
 
-    assert(juegoConUnLanzamiento.jugadaActual() == 1,
+    assert(juegoConUnLanzamiento.getJugadaActual() == 1,
        "La jugada actual no es 1")
   }
 
@@ -29,7 +29,7 @@ class JuegoTests
     assert(juegoConDosLanzamientos.getPuntuacion() == puntuacionTotal,
       s"El marcador despues de los lanzamientos no es $puntuacionTotal")
 
-    assert(juegoConDosLanzamientos.jugadaActual() == 1,
+    assert(juegoConDosLanzamientos.getJugadaActual() == 1,
       "La jugada actual no es 1")
   }
 
@@ -58,7 +58,7 @@ class JuegoTests
     assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(2) == puntuacionTotal,
       s"El marcador para la segunda jugada no es $puntuacionTotal")
 
-    assert(juegoConCuatroLanzamientos.jugadaActual() == 2,
+    assert(juegoConCuatroLanzamientos.getJugadaActual() == 2,
       "La jugada actual no es 2")
   }
 
@@ -122,6 +122,8 @@ class Juego {
   var puntuacion = 0
   var lanzamientos = new Array[Int](21)
   var lanzamientoActual = 1
+  var jugadaActual = 0
+  var primerLanzamiento = true
 
   def getPuntuacion() = puntuacion
 
@@ -129,6 +131,7 @@ class Juego {
     var lanzamiento  = 0
     var puntuacion = 0
     var contadorJugadas = 0
+
 
     while(contadorJugadas < jugada)
     {
@@ -153,9 +156,17 @@ class Juego {
     puntuacion += lanzamiento
     lanzamientos(lanzamientoActual) = lanzamiento
     lanzamientoActual += 1
+
+    if (primerLanzamiento == true)
+    {
+      primerLanzamiento = false
+      jugadaActual += 1
+    }
+    else
+    {
+      primerLanzamiento=true
+    }
   }
 
-  def jugadaActual() = {
-    lanzamientoActual/2
-  }
+  def getJugadaActual() = jugadaActual
 }
