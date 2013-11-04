@@ -156,7 +156,14 @@ class Juego {
     puntuacion += lanzamiento
     lanzamientos(lanzamientoActual) = lanzamiento
     lanzamientoActual += 1
+    ajustarJugadaActual()
 
+  }
+
+  def getJugadaActual() = jugadaActual
+
+  def ajustarJugadaActual()
+  {
     if (primerLanzamiento == true)
     {
       primerLanzamiento = false
@@ -167,6 +174,4 @@ class Juego {
       primerLanzamiento=true
     }
   }
-
-  def getJugadaActual() = jugadaActual
 }
