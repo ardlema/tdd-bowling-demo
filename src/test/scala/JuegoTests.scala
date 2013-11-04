@@ -29,8 +29,8 @@ class JuegoTests
     assert(juegoConDosLanzamientos.getPuntuacion() == puntuacionTotal,
       s"El marcador despues de los lanzamientos no es $puntuacionTotal")
 
-    assert(juegoConDosLanzamientos.getJugadaActual() == 1,
-      "La jugada actual no es 1")
+    assert(juegoConDosLanzamientos.getJugadaActual() == 2,
+      "La jugada actual no es 2")
   }
 
   test("añadir cuatro lanzamientos sin tirar todos los bolos en ninguno de ellos") {
@@ -58,8 +58,8 @@ class JuegoTests
     assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(2) == puntuacionTotal,
       s"El marcador para la segunda jugada no es $puntuacionTotal")
 
-    assert(juegoConCuatroLanzamientos.getJugadaActual() == 2,
-      "La jugada actual no es 2")
+    assert(juegoConCuatroLanzamientos.getJugadaActual() == 3,
+      "La jugada actual no es 3")
   }
 
   test("añadir un semipleno") {
