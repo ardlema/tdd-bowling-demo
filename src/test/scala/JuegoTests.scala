@@ -129,6 +129,24 @@ class JuegoTests
     assert(juegoConDosJugadasYUnStrike.getJugadaActual() == 3,
       s"La jugada actual no es 3")
   }
+
+  test("juego perfecto") {
+    val puntuacionJuegoPerfecto = 300
+    val juegoPerfecto = new Juego
+
+    for (i <- 1 to 12)
+    {
+      juegoPerfecto.añadir(10);
+    }
+
+    println(juegoPerfecto.getPuntuacion())
+    assert(juegoPerfecto.getPuntuacion()
+      == puntuacionJuegoPerfecto,
+      s"El marcador total no es $puntuacionJuegoPerfecto")
+
+    assert(juegoPerfecto.getJugadaActual() == 10,
+      s"La jugada actual no es 10")
+  }
 }
 
 class Juego {
