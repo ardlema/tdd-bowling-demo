@@ -136,23 +136,41 @@ class JuegoTests
 
     for (i <- 1 to 12)
     {
-      juegoPerfecto.añadir(10);
+      juegoPerfecto.añadir(10)
     }
 
-    println(juegoPerfecto.getPuntuacion())
     assert(juegoPerfecto.getPuntuacion()
       == puntuacionJuegoPerfecto,
       s"El marcador total no es $puntuacionJuegoPerfecto")
 
-    assert(juegoPerfecto.getJugadaActual() == 10,
+    assert(juegoPerfecto.getJugadaActual() == 11,
       s"La jugada actual no es 10")
+  }
+
+  test("final del array") {
+    val puntuacionJuegoConStrikeEnLaUltimaJugada = 20
+    val juegoConStrikeEnLaUltimaJugada = new Juego
+
+    for (i <- 0 to 8)
+    {
+      juegoConStrikeEnLaUltimaJugada.añadir(0)
+      juegoConStrikeEnLaUltimaJugada.añadir(0)
+    }
+    juegoConStrikeEnLaUltimaJugada.añadir(2)
+    juegoConStrikeEnLaUltimaJugada.añadir(8) //10th jugada
+    juegoConStrikeEnLaUltimaJugada.añadir(10) //Strike en la ultima posición
+
+
+    assert(juegoConStrikeEnLaUltimaJugada.getPuntuacion()
+      == puntuacionJuegoConStrikeEnLaUltimaJugada,
+      s"El marcador total no es $puntuacionJuegoConStrikeEnLaUltimaJugada")
   }
 }
 
 class Juego {
   var puntuacion = 0
   var lanzamientos = new Array[Int](21)
-  var lanzamientoActual = 1
+  var lanzamientoActual = 0
   var jugadaActual = 1
   var primerLanzamiento = true
 
@@ -168,20 +186,20 @@ class Juego {
     while(contadorJugadas < jugada)
     {
       contadorJugadas += 1
-      val puntuacionPrimerLanzamiento = lanzamientos(lanzamiento+1)
+      val puntuacionPrimerLanzamiento = lanzamientos(lanzamiento)
 
       //strike
       if (puntuacionPrimerLanzamiento==10) {
-        puntuacion += 10 + lanzamientos(lanzamiento+2) + lanzamientos(lanzamiento+3)
+        puntuacion += 10 + lanzamientos(lanzamiento+1) + lanzamientos(lanzamiento+2)
         lanzamiento += 1
       }
       else {
-        val puntuacionSegundoLanzamiento = lanzamientos(lanzamiento+2)
+        val puntuacionSegundoLanzamiento = lanzamientos(lanzamiento+1)
         val puntuacionJugada = puntuacionPrimerLanzamiento + puntuacionSegundoLanzamiento
 
 
         if (puntuacionJugada==10)
-           puntuacion += puntuacionJugada + lanzamientos(lanzamiento+3)
+           puntuacion += puntuacionJugada + lanzamientos(lanzamiento+2)
         else
            puntuacion += puntuacionJugada
 
