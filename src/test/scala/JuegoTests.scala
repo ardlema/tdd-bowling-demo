@@ -108,7 +108,8 @@ class JuegoTests
       == puntuacionTotal,
       s"El marcador del semipleno no es $puntuacionTotal")
 
-
+    assert(puntuacionTotal == juegoConCuatroLanzamientos.getPuntuacion(),
+      s"El marcador total no es $puntuacionTotal")
 
     assert(juegoConCuatroLanzamientos.getJugadaActual() == 3,
       "La jugada actual no es 3")
