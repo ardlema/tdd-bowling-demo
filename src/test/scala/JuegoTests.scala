@@ -194,6 +194,19 @@ class JuegoTests
       == puntuacionPartidaDeEjemplo,
       s"El marcador total no es $puntuacionPartidaDeEjemplo")
   }
+
+  test("11 strikes y un 9") {
+    val puntuacion11StrikesYUn9 = 299
+    val partidaCon11StrikesYUn9 = new Juego
+    for (i <- 0 to 10)
+      partidaCon11StrikesYUn9.añadir(10)
+
+    partidaCon11StrikesYUn9.añadir(9)
+
+    assert(partidaCon11StrikesYUn9.getPuntuacion()
+      == puntuacion11StrikesYUn9,
+      s"El marcador total no es $puntuacion11StrikesYUn9")
+  }
 }
 
 class Juego {
