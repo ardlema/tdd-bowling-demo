@@ -123,7 +123,9 @@ class Juego {
   var jugadaActual = 1
   var primerLanzamiento = true
 
-  def getPuntuacion() = puntuacion
+  def getPuntuacion() = {
+    getPuntuacionParaJugada(getJugadaActual()-1)
+  }
 
   def getPuntuacionParaJugada(jugada: Int) = {
     var lanzamiento  = 0
