@@ -111,22 +111,22 @@ class JuegoTests
     val puntuacionTotalPrimeraJugada = puntuacionPrimerLanzamiento + puntuacionTotalSegundaJugada
     val puntuacionTotal = puntuacionTotalPrimeraJugada + puntuacionTotalSegundaJugada
 
-    val juegoConCuatroLanzamientos = new Juego
+    val juegoConDosJugadasYUnStrike = new Juego
 
-    juegoConCuatroLanzamientos.añadir(puntuacionPrimerLanzamiento)
-    juegoConCuatroLanzamientos.añadir(puntuacionSegundoLanzamiento)
-    juegoConCuatroLanzamientos.añadir(puntuacionTercerLanzamiento)
+    juegoConDosJugadasYUnStrike.añadir(puntuacionPrimerLanzamiento)
+    juegoConDosJugadasYUnStrike.añadir(puntuacionSegundoLanzamiento)
+    juegoConDosJugadasYUnStrike.añadir(puntuacionTercerLanzamiento)
 
-    assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(1)
+
+    assert(juegoConDosJugadasYUnStrike.getPuntuacionParaJugada(1)
       == puntuacionTotalPrimeraJugada,
       s"El marcador del pleno no es $puntuacionTotalPrimeraJugada")
 
-    assert(juegoConCuatroLanzamientos.getPuntuacion()
+    assert(juegoConDosJugadasYUnStrike.getPuntuacion()
       == puntuacionTotal,
-      s"El marcador del semipleno no es $puntuacionTotal")
+      s"El marcador total no es $puntuacionTotal")
 
-    assert(juegoConCuatroLanzamientos.getJugadaActual()
-      == 3,
+    assert(juegoConDosJugadasYUnStrike.getJugadaActual() == 3,
       s"La jugada actual no es 3")
   }
 }
@@ -147,21 +147,28 @@ class Juego {
     var puntuacion = 0
     var contadorJugadas = 0
 
-
     while(contadorJugadas < jugada)
     {
       contadorJugadas += 1
       val puntuacionPrimerLanzamiento = lanzamientos(lanzamiento+1)
-      val puntuacionSegundLanzamiento = lanzamientos(lanzamiento+2)
 
-      val puntuacionJugada = puntuacionPrimerLanzamiento + puntuacionSegundLanzamiento
+      //strike
+      if (puntuacionPrimerLanzamiento==10) {
+        puntuacion += 10 + lanzamientos(lanzamiento+2) + lanzamientos(lanzamiento+3)
+        lanzamiento += 1
+      }
+      else {
+        val puntuacionSegundoLanzamiento = lanzamientos(lanzamiento+2)
+        val puntuacionJugada = puntuacionPrimerLanzamiento + puntuacionSegundoLanzamiento
 
-      puntuacion += puntuacionJugada
 
-      if (puntuacionJugada==10)
-         puntuacion += lanzamientos(lanzamiento+3)
+        if (puntuacionJugada==10)
+           puntuacion += puntuacionJugada + lanzamientos(lanzamiento+3)
+        else
+           puntuacion += puntuacionJugada
 
-      lanzamiento += 2
+        lanzamiento += 2
+      }
     }
 
     puntuacion
@@ -171,17 +178,20 @@ class Juego {
     puntuacion += lanzamiento
     lanzamientos(lanzamientoActual) = lanzamiento
     lanzamientoActual += 1
-    ajustarJugadaActual()
+    ajustarJugadaActual(lanzamiento)
 
   }
 
   def getJugadaActual() = jugadaActual
 
-  def ajustarJugadaActual()
+  def ajustarJugadaActual(lanzamiento: Int)
   {
     if (primerLanzamiento)
     {
-      primerLanzamiento = false
+      if (lanzamiento == 10) //strike
+         jugadaActual += 1
+      else
+        primerLanzamiento = false
     }
     else
     {
