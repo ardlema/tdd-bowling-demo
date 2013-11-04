@@ -207,6 +207,21 @@ class JuegoTests
       == puntuacion11StrikesYUn9,
       s"El marcador total no es $puntuacion11StrikesYUn9")
   }
+
+  test("semipleno en la jugada 10") {
+    val puntuacionSemiplenoJugada10 = 270
+    val partidaConSemiplenoJugada10 = new Juego
+    for (i <- 0 to 8)
+      partidaConSemiplenoJugada10.añadir(10)
+
+    partidaConSemiplenoJugada10.añadir(9)
+    partidaConSemiplenoJugada10.añadir(1)
+    partidaConSemiplenoJugada10.añadir(1)
+
+    assert(partidaConSemiplenoJugada10.getPuntuacion()
+      == puntuacionSemiplenoJugada10,
+      s"El marcador total no es $puntuacionSemiplenoJugada10")
+  }
 }
 
 class Juego {
