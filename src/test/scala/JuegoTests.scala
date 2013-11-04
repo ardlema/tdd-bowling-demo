@@ -6,18 +6,6 @@ class JuegoTests
   extends FunSuite
   with BeforeAndAfterEach {
 
-  test("añadir un lanzamiento") {
-    val puntuacionLanzamiento = 5
-    val juegoConUnLanzamiento = new Juego
-    juegoConUnLanzamiento.añadir(puntuacionLanzamiento)
-
-    assert(juegoConUnLanzamiento.getPuntuacion() == puntuacionLanzamiento,
-      s"El marcador inicial no es $puntuacionLanzamiento")
-
-    assert(juegoConUnLanzamiento.getJugadaActual() == 1,
-       "La jugada actual no es 1")
-  }
-
   test("añadir dos lanzamientos sin tirar todos los bolos") {
     val puntuacionPrimerLanzamiento = 5
     val puntuacionSegundoLanzamiento = 4
