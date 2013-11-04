@@ -102,6 +102,33 @@ class JuegoTests
     assert(juegoConCuatroLanzamientos.getJugadaActual() == 3,
       "La jugada actual no es 3")
   }
+
+  test("añadir pleno") {
+    val puntuacionPrimerLanzamiento = 10
+    val puntuacionSegundoLanzamiento = 3
+    val puntuacionTercerLanzamiento = 6
+    val puntuacionTotalSegundaJugada = puntuacionSegundoLanzamiento + puntuacionTercerLanzamiento
+    val puntuacionTotalPrimeraJugada = puntuacionPrimerLanzamiento + puntuacionTotalSegundaJugada
+    val puntuacionTotal = puntuacionTotalPrimeraJugada + puntuacionTotalSegundaJugada
+
+    val juegoConCuatroLanzamientos = new Juego
+
+    juegoConCuatroLanzamientos.añadir(puntuacionPrimerLanzamiento)
+    juegoConCuatroLanzamientos.añadir(puntuacionSegundoLanzamiento)
+    juegoConCuatroLanzamientos.añadir(puntuacionTercerLanzamiento)
+
+    assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(1)
+      == puntuacionTotalPrimeraJugada,
+      s"El marcador del pleno no es $puntuacionTotalPrimeraJugada")
+
+    assert(juegoConCuatroLanzamientos.getPuntuacion()
+      == puntuacionTotal,
+      s"El marcador del semipleno no es $puntuacionTotal")
+
+    assert(juegoConCuatroLanzamientos.getJugadaActual()
+      == 3,
+      s"La jugada actual no es 3")
+  }
 }
 
 class Juego {
