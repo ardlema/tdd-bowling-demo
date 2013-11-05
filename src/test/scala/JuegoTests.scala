@@ -247,17 +247,29 @@ class Juego {
   {
     if (primerLanzamientoenJugada)
     {
-      if (lanzamiento == 10) //strike
-         jugadaActual += 1
-      else
+      if (ajustarJugadaParaStrike(lanzamiento)==false)
         primerLanzamientoenJugada = false
     }
     else
     {
       primerLanzamientoenJugada = true
-      jugadaActual += 1
+      avanzarJugada()
     }
-    jugadaActual = math.min(11, jugadaActual)
+  }
+
+  def avanzarJugada() = {
+    jugadaActual = math.min(11, jugadaActual + 1);
+  }
+
+  def ajustarJugadaParaStrike(lanzamiento: Int) =
+  {
+    if (lanzamiento == 10)
+    {
+      avanzarJugada()
+      true
+    } else {
+        false
+    }
   }
 
   def getPuntuacionParaJugada(jugada: Int) = marcador.puntuacionParaJugada(jugada)
