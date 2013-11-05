@@ -229,42 +229,51 @@ class Juego {
   var lanzamientos = new Array[Int](21)
   var lanzamientoActual = 0
   var jugadaActual = 1
-  var primerLanzamiento = true
+  var primerLanzamientoenJugada = true
+  var primerLanzamiento = 0
+  var segundoLanzamiento = 0
+  var bolo = 0
 
   def getPuntuacion() = {
     getPuntuacionParaJugada(getJugadaActual()-1)
   }
 
   def getPuntuacionParaJugada(jugada: Int) = {
-    var lanzamiento  = 0
     var puntuacion = 0
     var contadorJugadas = 0
+    bolo = 0
 
     while(contadorJugadas < jugada)
     {
+      primerLanzamiento = lanzamientos(bolo)
       contadorJugadas += 1
-      val puntuacionPrimerLanzamiento = lanzamientos(lanzamiento)
-
+      bolo = bolo+1
       //strike
-      if (puntuacionPrimerLanzamiento==10) {
-        puntuacion += 10 + lanzamientos(lanzamiento+1) + lanzamientos(lanzamiento+2)
-        lanzamiento += 1
+      if (primerLanzamiento==10) {
+        puntuacion += 10 + lanzamientos(bolo) + lanzamientos(bolo+1)
       }
       else {
-        val puntuacionSegundoLanzamiento = lanzamientos(lanzamiento+1)
-        val puntuacionJugada = puntuacionPrimerLanzamiento + puntuacionSegundoLanzamiento
-
-
-        if (puntuacionJugada==10)
-           puntuacion += puntuacionJugada + lanzamientos(lanzamiento+2)
-        else
-           puntuacion += puntuacionJugada
-
-        lanzamiento += 2
+        puntuacion += calcularSegundoLanzamiento()
       }
     }
 
     puntuacion
+  }
+
+
+  def calcularSegundoLanzamiento() = {
+    var marcador = 0
+    val puntuacionSegundoLanzamiento = lanzamientos(bolo)
+    bolo = bolo + 1
+    val puntuacionJugada = primerLanzamiento + puntuacionSegundoLanzamiento
+
+
+    if (puntuacionJugada==10)
+      marcador += puntuacionJugada + lanzamientos(bolo)
+    else
+      marcador += puntuacionJugada
+
+    marcador
   }
 
   def añadir(lanzamiento: Int) {
@@ -279,16 +288,16 @@ class Juego {
 
   def ajustarJugadaActual(lanzamiento: Int)
   {
-    if (primerLanzamiento)
+    if (primerLanzamientoenJugada)
     {
       if (lanzamiento == 10) //strike
          jugadaActual += 1
       else
-        primerLanzamiento = false
+        primerLanzamientoenJugada = false
     }
     else
     {
-      primerLanzamiento = true
+      primerLanzamientoenJugada = true
       jugadaActual += 1
     }
     jugadaActual = math.min(11, jugadaActual)
