@@ -18,9 +18,6 @@ class JuegoTests
 
     assert(juegoConDosLanzamientos.getPuntuacion() == puntuacionTotal,
       s"El marcador despues de los lanzamientos no es $puntuacionTotal")
-
-    assert(juegoConDosLanzamientos.getJugadaActual() == 2,
-      "La jugada actual no es 2")
   }
 
   test("añadir cuatro lanzamientos sin tirar todos los bolos en ninguno de ellos") {
@@ -47,9 +44,6 @@ class JuegoTests
 
     assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(2) == puntuacionTotal,
       s"El marcador para la segunda jugada no es $puntuacionTotal")
-
-    assert(juegoConCuatroLanzamientos.getJugadaActual() == 3,
-      "La jugada actual no es 3")
   }
 
   test("añadir un semipleno") {
@@ -68,9 +62,6 @@ class JuegoTests
     assert(juegoConCuatroLanzamientos.getPuntuacionParaJugada(1)
       == puntuacionSemipleno,
       s"El marcador del semipleno no es $puntuacionSemipleno")
-
-    assert(juegoConCuatroLanzamientos.getJugadaActual() == 2,
-      "La jugada actual no es 2")
   }
 
   test("añadir jugada despues de semipleno") {
@@ -100,9 +91,6 @@ class JuegoTests
 
     assert(puntuacionTotal == juegoConCuatroLanzamientos.getPuntuacion(),
       s"El marcador total no es $puntuacionTotal")
-
-    assert(juegoConCuatroLanzamientos.getJugadaActual() == 3,
-      "La jugada actual no es 3")
   }
 
   test("añadir pleno") {
@@ -127,9 +115,6 @@ class JuegoTests
     assert(juegoConDosJugadasYUnStrike.getPuntuacion()
       == puntuacionTotal,
       s"El marcador total no es $puntuacionTotal")
-
-    assert(juegoConDosJugadasYUnStrike.getJugadaActual() == 3,
-      s"La jugada actual no es 3")
   }
 
   test("juego perfecto") {
@@ -144,9 +129,6 @@ class JuegoTests
     assert(juegoPerfecto.getPuntuacion()
       == puntuacionJuegoPerfecto,
       s"El marcador total no es $puntuacionJuegoPerfecto")
-
-    assert(juegoPerfecto.getJugadaActual() == 11,
-      s"La jugada actual no es 10")
   }
 
   test("final del array") {
@@ -233,10 +215,8 @@ class Juego {
   val marcador = new Marcador()
 
   def getPuntuacion() = {
-    getPuntuacionParaJugada(getJugadaActual()-1)
+    getPuntuacionParaJugada(jugadaActual)
   }
-
-  def getJugadaActual() = jugadaActual
 
   def añadir(lanzamiento: Int) = {
     marcador.añadirLanzamiento(lanzamiento)
@@ -258,7 +238,7 @@ class Juego {
   }
 
   def avanzarJugada() = {
-    jugadaActual = math.min(11, jugadaActual + 1);
+    jugadaActual = math.min(10, jugadaActual + 1);
   }
 
   def ajustarJugadaParaStrike(lanzamiento: Int) =
