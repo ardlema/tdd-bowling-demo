@@ -14,6 +14,8 @@ class JuegoTests
     juegoConDosLanzamientos.añadir(puntuacionPrimerLanzamiento)
     juegoConDosLanzamientos.añadir(puntuacionSegundoLanzamiento)
 
+    val punt = juegoConDosLanzamientos.getPuntuacion()
+
     assert(juegoConDosLanzamientos.getPuntuacion() == puntuacionTotal,
       s"El marcador despues de los lanzamientos no es $puntuacionTotal")
 
@@ -226,95 +228,20 @@ class JuegoTests
 
 class Juego {
   var puntuacion = 0
-  var lanzamientos = new Array[Int](21)
-  var lanzamientoActual = 0
   var jugadaActual = 1
   var primerLanzamientoenJugada = true
-  var primerLanzamiento = 0
-  var segundoLanzamiento = 0
-  var bolo = 0
+  val marcador = new Marcador()
 
   def getPuntuacion() = {
     getPuntuacionParaJugada(getJugadaActual()-1)
   }
 
-  def getPuntuacionParaJugada(jugada: Int) = {
-    var puntuacion = 0
-    var contadorJugadas = 0
-    bolo = 0
-
-    while(contadorJugadas < jugada)
-    {
-      primerLanzamiento = lanzamientos(bolo)
-      contadorJugadas += 1
-      //strike
-      if (strike) {
-        puntuacion += 10 + siguientesDosBolas
-      }
-      else if (spare) {
-        puntuacion += 10 + puntuacionSiguienteBola
-      }
-      else {
-        puntuacion += dosBolasEnLaJugada
-      }
-    }
-
-    puntuacion
-  }
-
-  def strike = {
-    if (lanzamientos(bolo) == 10) {
-      bolo = bolo + 1
-      true
-    } else {
-        false
-    }
-  }
-
-  def spare = {
-    if (lanzamientos(bolo)+lanzamientos(bolo+1)==10) {
-      bolo = bolo + 2
-      true
-    } else {
-      false
-    }
-  }
-
-  def siguientesDosBolas = lanzamientos(bolo) + lanzamientos(bolo+1)
-
-  def dosBolasEnLaJugada = {
-    val puntuacionDosBolas = siguientesDosBolas
-    bolo = bolo + 2
-    puntuacionDosBolas
-  }
-
-
-  def calcularSegundoLanzamiento = {
-    var marcador = 0
-
-    if (spare) {
-      bolo += 2
-      marcador += 10 + puntuacionSiguienteBola
-    }
-    else {
-      marcador += siguientesDosBolas
-      bolo +=2
-    }
-
-    marcador
-  }
-
-  def puntuacionSiguienteBola = lanzamientos(bolo)
-
-  def añadir(lanzamiento: Int) {
-    puntuacion += lanzamiento
-    lanzamientos(lanzamientoActual) = lanzamiento
-    lanzamientoActual += 1
-    ajustarJugadaActual(lanzamiento)
-
-  }
-
   def getJugadaActual() = jugadaActual
+
+  def añadir(lanzamiento: Int) = {
+    marcador.añadirLanzamiento(lanzamiento)
+    ajustarJugadaActual(lanzamiento)
+  }
 
   def ajustarJugadaActual(lanzamiento: Int)
   {
@@ -332,4 +259,70 @@ class Juego {
     }
     jugadaActual = math.min(11, jugadaActual)
   }
+
+  def getPuntuacionParaJugada(jugada: Int) = marcador.puntuacionParaJugada(jugada)
+}
+
+class Marcador {
+  var marcadorBola = 0
+  var marcadorLanzamientos = new Array[Int](21)
+  var marcadorLanzamientoActual = 0
+
+  def añadirLanzamiento(puntuacion: Int)
+  {
+    marcadorLanzamientos(marcadorLanzamientoActual) = puntuacion
+    marcadorLanzamientoActual += 1
+  }
+
+
+  def puntuacionParaJugada(jugada: Int) = {
+    marcadorBola = 0
+    var puntuacion = 0
+    var contadorJugadas = 0
+
+    while(contadorJugadas < jugada)
+    {
+      contadorJugadas += 1
+      //strike
+      if (strike) {
+        puntuacion += 10 + siguientesDosBolas
+      }
+      else if (spare) {
+        puntuacion += 10 + puntuacionSiguienteBola
+      }
+      else {
+        puntuacion += dosBolasEnLaJugada
+      }
+    }
+
+    puntuacion
+  }
+
+  def strike = {
+    if (marcadorLanzamientos(marcadorBola) == 10) {
+      marcadorBola = marcadorBola + 1
+      true
+    } else {
+      false
+    }
+  }
+
+  def spare = {
+    if (marcadorLanzamientos(marcadorBola)+marcadorLanzamientos(marcadorBola+1)==10) {
+      marcadorBola = marcadorBola + 2
+      true
+    } else {
+      false
+    }
+  }
+
+  def siguientesDosBolas = marcadorLanzamientos(marcadorBola) + marcadorLanzamientos(marcadorBola+1)
+
+  def dosBolasEnLaJugada = {
+    val puntuacionDosBolas = siguientesDosBolas
+    marcadorBola = marcadorBola + 2
+    puntuacionDosBolas
+  }
+
+  def puntuacionSiguienteBola = marcadorLanzamientos(marcadorBola)
 }
