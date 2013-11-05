@@ -247,10 +247,10 @@ class Juego {
     {
       primerLanzamiento = lanzamientos(bolo)
       contadorJugadas += 1
-      bolo = bolo+1
       //strike
-      if (primerLanzamiento==10) {
-        puntuacion += 10 + lanzamientos(bolo) + lanzamientos(bolo+1)
+      if (strike()) {
+        bolo = bolo+1
+        puntuacion += 10 + nextTwoBalls()
       }
       else {
         puntuacion += calcularSegundoLanzamiento()
@@ -260,18 +260,25 @@ class Juego {
     puntuacion
   }
 
+  def strike() = lanzamientos(bolo) == 10
+
+  def nextTwoBalls() = lanzamientos(bolo) + lanzamientos(bolo+1)
+
 
   def calcularSegundoLanzamiento() = {
     var marcador = 0
-    val puntuacionSegundoLanzamiento = lanzamientos(bolo)
-    bolo = bolo + 1
+    val puntuacionSegundoLanzamiento = lanzamientos(bolo+1)
     val puntuacionJugada = primerLanzamiento + puntuacionSegundoLanzamiento
 
 
-    if (puntuacionJugada==10)
+    if (puntuacionJugada==10) {
+      bolo += 2
       marcador += puntuacionJugada + lanzamientos(bolo)
-    else
+    }
+    else {
+      bolo +=2
       marcador += puntuacionJugada
+    }
 
     marcador
   }
