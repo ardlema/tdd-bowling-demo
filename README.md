@@ -16,7 +16,7 @@ Puesta en marcha
 ================
 
   * Clonar el proyecto 
-  * Si se utiliza Intellij para crear los ficheros necesarios que permitan importar el proyecto:
+  * Si se utiliza Intellij como IDE se pueden generar los ficheros necesarios que permitan importar el proyecto fácilmente de la siguiente manera:
       - Moverse al directorio donde se ha clonado el proyecto
       - Ejecutar: sbt gen-idea
 
